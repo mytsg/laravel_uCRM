@@ -19,8 +19,8 @@ class Customer extends Model
             if(Customer::where('kana','like',$input. '%')
             ->orWhere('tel','like',$input. '%')->exists())
             {
-                return $query->where('kana','like',$input. '%')
-                ->orWhere('tel','like',$input. '%');
+                return $query->where('kana','like','%' .$input. '%')
+                ->orWhere('tel','like','%' .$input. '%');
             }
             
         }

@@ -1,32 +1,32 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import axios from 'axios';
+// import axios from 'axios';
 
 const search = ref('')
 const customers = reactive({})
 
-onMounted(() => {
-    axios.get('/api/user')
-    .then(res => {
-        console.log(res)
-    })
-})
+// onMounted(() => {
+//     axios.get('/api/user')
+//     .then(res => {
+//         console.log(res)
+//     })
+// })
 
 const isShow = ref(false)
 const toggleStatus = () => { isShow.value = !isShow.value }
 
-const searchCustomers = async () => {
-    try {
-    await axios.get(`/api/searchCustomers/?search=${search.value}`)  //search.valueはinputで入力される値
-    .then(res => {
-        console.log(res.data)
-        customers.value = res.data
-    })
-    toggleStatus()
-    } catch (e) {
-        console.log(e)
-    }
-}
+// const searchCustomers = async () => {
+//     try {
+//     await axios.get(`/api/searchCustomers/?search=${search.value}`)  //search.valueはinputで入力される値
+//     .then(res => {
+//         console.log(res.data)
+//         customers.value = res.data
+//     })
+//     toggleStatus()
+//     } catch (e) {
+//         console.log(e)
+//     }
+// }
 
 </script>
 
@@ -54,5 +54,5 @@ const searchCustomers = async () => {
     </div>
   </div>
   <input name="customer" v-model="search">
-  <button @click="searchCustomers" type="button" data-micromodal-trigger="modal-1">検索する</button>
+  <!-- <button @click="searchCustomers" type="button" data-micromodal-trigger="modal-1">検索する</button> -->
 </template>
