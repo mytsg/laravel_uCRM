@@ -1,16 +1,9 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-// import axios from 'axios';
 
 const search = ref('')
 const customers = reactive({})
 
-// onMounted(() => {
-//     axios.get('/api/user')
-//     .then(res => {
-//         console.log(res)
-//     })
-// })
 
 const isShow = ref(false)
 const toggleStatus = () => { isShow.value = !isShow.value }

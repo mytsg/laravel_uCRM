@@ -5,6 +5,7 @@ import FlashMessage from '@/Components/FlashMessage.vue';
 import Pagination from '@/Components/Pagination.vue'
 import { ref, onMounted } from 'vue'
 import { Inertia } from '@inertiajs/inertia';
+import dayjs from 'dayjs'
 
 const props = defineProps({
     orders: Object
@@ -52,11 +53,15 @@ onMounted(() => {
                                         </thead>
                                         <tbody>
                                             <tr v-for="order in props.orders.data" :key="order.id" class="border border-b-2 border-gray-100">
-                                                <td class="px-4 py-3 border-b-2 border-gray-200">{{ order.id }}</td>
+                                                <td class="px-4 py-3 border-b-2 border-gray-200">
+                                                    <Link class="text-blue-400" :href="route('purchases.show',{ purchase: order.id})">
+                                                    {{ order.id }}
+                                                    </Link>
+                                                </td>
                                                 <td class="px-4 py-3 border-b-2 border-gray-200">{{ order.customer_name }}</td>
                                                 <td class="px-4 py-3 border-b-2 border-gray-200">{{ order.total }}</td>
                                                 <td class="px-4 py-3 border-b-2 border-gray-200">{{ order.status }}</td>
-                                                <td class="px-4 py-3 border-b-2 border-gray-200">{{ order.created_at }}</td>
+                                                <td class="px-4 py-3 border-b-2 border-gray-200">{{ dayjs(order.created_at).format('YYYY-MM-DD HH:mm:ss') }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
