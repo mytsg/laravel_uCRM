@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
+use App\Services\AnalysisService;
+use App\Services\DecileService;
 
 class AnalysisController extends Controller
 {
@@ -14,18 +16,20 @@ class AnalysisController extends Controller
         $subQuery = Order::betweenDate($request->startDate, $request->endDate);
 
         if($request->type === 'perDay'){
-            $subQuery->where('status', true)
-            ->groupBy('id')
-            ->selectRaw('id, sum(subtotal) as totalPerPurchase, DATE_FORMAT(created_at, "%Y%m%d") as date');
-            // $subQuryはテーブルとして返ってくる
+            list($data, $labels, $totals) = Analysisservice::perDay($subQuery); 
+            //list()により配列と同様の形式で複数の変数に値の代入を行う
+        }
+        if($request->type === 'perMonth'){
+            list($data, $labels, $totals) = Analysisservice::perMonth($subQuery); 
+            //list()により配列と同様の形式で複数の変数に値の代入を行う
+        }
+        if($request->type === 'perYear'){
+            list($data, $labels, $totals) = Analysisservice::perYear($subQuery); 
+            //list()により配列と同様の形式で複数の変数に値の代入を行う
+        }
 
-            $data = DB::table($subQuery)
-            ->groupBy('date')
-            ->selectRaw('date, sum(totalPerPurchase) as total')
-            ->get();
-
-            $labels = $data->pluck('date'); //キーがdateのものだけを配列として取得
-            $totals = $data->pluck('total');
+        if($request->type === 'decile'){
+            list($data, $labels, $totals) = DecileService::decile($subQuery);
         }
 
         return response()->json([
